@@ -11,14 +11,34 @@ $(document).ready(function() {
   });
 
   function getQuote(){
-
-    //YOUR CODE HERE, Add a GET request
+    $.ajax({
+      url: `http://127.0.0.1:3001/quote/`,
+      type: 'GET',
+      contentType: 'application/json',
+      success: function(data) {
+        $('body').append(data);
+        console.log('success');
+      },
+      error: function () {
+        console.error('failed to get quote');
+      }
+    })
 
   }
 
   function addQuote(quote){
-    
-    //YOUR CODE HERE, Add a POST request
+    $.ajax({
+      url: `http://127.0.0.1:3001/quote/`,
+      type: 'POST',
+      contentType: 'application/json',
+      data: JSON.stringify(quote),
+      success: function() {
+        console.log('success');
+      },
+      error: function() {
+        console.error('failed to add quote');
+      }
+    })
 
   }
 });
