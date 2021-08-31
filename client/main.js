@@ -17,28 +17,29 @@ $(document).ready(function() {
       contentType: 'application/json',
       success: function(data) {
         $('body').append(data);
-        console.log('success');
+        console.info('success');
       },
       error: function () {
         console.error('failed to get quote');
       }
-    })
-
+    });
   }
 
   function addQuote(quote){
     $.ajax({
       url: `http://127.0.0.1:3001/quote/`,
       type: 'POST',
+      cors: true,
       contentType: 'application/json',
-      data: JSON.stringify(quote),
+      data: JSON.stringify({ quote: quote }),
       success: function() {
-        console.log('success');
+        console.info('success');
       },
       error: function() {
         console.error('failed to add quote');
       }
-    })
-
+    });
   }
 });
+
+
