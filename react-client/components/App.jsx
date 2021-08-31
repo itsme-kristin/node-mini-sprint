@@ -24,11 +24,14 @@ class App extends React.Component {
     axios.get('http://127.0.0.1:3001/quote/')
       .then(response => {
         // console.log('response received');
+        // console.log(response.data[0].quote);
+        //WHEN YOU ARE USING AXIOS, PLEASE CONSOLE.LOG THE RESPONSE!!!!
         this.setState({
-          currentQuote: response.data //<whatever you've named it>.data
+          currentQuote: response.data[0].quote //<whatever you've named it>.data
         });
       })
       .catch(err => {
+        // console.log(err);
         console.info('there was an error retrieving the quote');
       });
   }

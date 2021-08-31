@@ -3,6 +3,7 @@ const app = express();
 const path = require('path');
 const port = 3001;
 const cors = require('cors');
+const db = require('./db/index');
 // const bodyParser = require('body-parser'); //do I need this????
 // const headers = {
 //   "access-control-allow-origin": "*",
@@ -21,13 +22,13 @@ app.use(cors());
 // }); //middleware to set headers
 
 // TODO: Fill with strings of your favorite quotes :) DONE
-const quotes = [
-  'If you\'re always trying to be normal you will never know how amazing you can be.',
-  'If you don\'t like something, change it. If you can\'t change it, change your attitude.',
-  'You may kill me with your hatefulness, but still, like air, I\'ll rise.',
-  'When someone shows you who they are, believe them the first time.',
-  'We delight in the beauty of the butterfly, but rarely admit the changes it has gone through to achieve that beauty.'
-];
+// const quotes = [
+//   'If you\'re always trying to be normal you will never know how amazing you can be.',
+//   'If you don\'t like something, change it. If you can\'t change it, change your attitude.',
+//   'You may kill me with your hatefulness, but still, like air, I\'ll rise.',
+//   'When someone shows you who they are, believe them the first time.',
+//   'We delight in the beauty of the butterfly, but rarely admit the changes it has gone through to achieve that beauty.'
+// ];
 
 //Utility Function to return a random integer
 function getRandomInt(min, max) {
@@ -43,29 +44,45 @@ app.get('/', function (req, res) {
 })
 
 app.get('/quote/' || '/quote', function (req, res) {
-  function getOne(err) {
+  // function getOne(err) {
+  //   if (err) {
+  //     res.sendStatus(404);
+  //   } else {
+  //     var quote = quotes[getRandomInt(0, quotes.length)];
+  //     res.status(200).json(quote);
+  //   }
+  // }
+  // getOne(null);
+  db.getQuote(function(err, quote) {
     if (err) {
       res.sendStatus(404);
     } else {
-      var quote = quotes[getRandomInt(0, quotes.length)];
       res.status(200).json(quote);
     }
-  }
-  getOne(null);
+  });
+  // db.getQuote(null);
 })
 
 
 app.post('/quote/' || '/quote', function (req, res) {
-  function addOne(err, newQuote) {
+  // function addOne(err, newQuote) {
+  //   if (err) {
+  //     res.sendStatus(404);
+  //   } else {
+  //     quotes.push(newQuote);
+  //     console.log(quotes);
+  //     res.status(201).send(newQuote);
+  //   }
+  // }
+  // addOne(null, req.body.quote);
+  var params = req.body.quote;
+  db.addQuote(params, function(err, quote) {
     if (err) {
       res.sendStatus(404);
     } else {
-      quotes.push(newQuote);
-      console.log(quotes);
-      res.status(201).send(newQuote);
+      res.sendStatus(201);
     }
-  }
-  addOne(null, req.body.quote);
+  })
 })
 
 app.listen(port);
