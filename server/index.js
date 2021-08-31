@@ -3,21 +3,22 @@ const app = express();
 const path = require('path');
 const port = 3001;
 const cors = require('cors');
-const bodyParser = require('body-parser'); //do I need this????
-const headers = {
-  "access-control-allow-origin": "*",
-  "access-control-allow-methods": "GET, POST, PUT, DELETE, OPTIONS",
-  "access-control-allow-headers": "content-type, accept, Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With",
-  "access-control-max-age": 10
+// const bodyParser = require('body-parser'); //do I need this????
+// const headers = {
+//   "access-control-allow-origin": "*",
+//   "access-control-allow-methods": "GET, POST, PUT, DELETE, OPTIONS",
+//   "access-control-allow-headers": "content-type, accept, Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With",
+//   "access-control-max-age": 10
 
-};
+// };
 
-app.use(express.static(path.join(__dirname, '/client')));
+app.use(express.static(path.join(__dirname, '/react-client')));
 app.use(express.json());
-app.use((req, res, next) => {
-  res.set(headers);
-  next();
-}); //middleware to set headers
+app.use(cors());
+// app.use((req, res, next) => {
+//   res.set(headers);
+//   next();
+// }); //middleware to set headers
 
 // TODO: Fill with strings of your favorite quotes :) DONE
 const quotes = [
@@ -59,11 +60,12 @@ app.post('/quote/' || '/quote', function (req, res) {
     if (err) {
       res.sendStatus(404);
     } else {
-      quotes.push(newQuote.quote);
-      res.status(201).send(newQuote.quote);
+      quotes.push(newQuote);
+      console.log(quotes);
+      res.status(201).send(newQuote);
     }
   }
-  addOne(null, req.body);
+  addOne(null, req.body.quote);
 })
 
 app.listen(port);
