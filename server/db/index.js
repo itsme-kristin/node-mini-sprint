@@ -6,29 +6,7 @@ dbConnection = mysql.createConnection({
   database: 'quoteCollection'
 });
 
-// function getRandomInt(min, max) {
-//   min = Math.ceil(min);
-//   max = Math.floor(max);
-//   return Math.floor(Math.random() * (max - min)) + min; //The maximum is exclusive and the minimum is inclusive
-// }
-
-// function getTotal(callback) {
-//   var queryString = 'SELECT COUNT(*) FROM quotes';
-//   dbConnection.query(queryString, (err, number) => {
-//     if (err) {
-//       callback(err);
-//     } else {
-//       console.log('in total:', number);
-//       callback(null, number);
-//     }
-//   })
-// }
-
 function getQuote(callback) {
-  // var quoteId = await getRandomInt(1, getTotal(function(err, number) {
-  //   return number;
-  // }))
-  // console.log('after quoteId:', quoteId['COUNT(*)']);
   var queryString = 'SELECT quote FROM quotes ORDER BY RAND() LIMIT 1';
   dbConnection.query(queryString, (err, quote) => {
     if (err) {
@@ -36,7 +14,6 @@ function getQuote(callback) {
     } else {
       callback(null, quote);
     }
-  // callback(quote);
   })
 }
 

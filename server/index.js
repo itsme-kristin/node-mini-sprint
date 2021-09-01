@@ -31,11 +31,11 @@ app.use(cors());
 // ];
 
 //Utility Function to return a random integer
-function getRandomInt(min, max) {
-  min = Math.ceil(min);
-  max = Math.floor(max);
-  return Math.floor(Math.random() * (max - min)) + min; //The maximum is exclusive and the minimum is inclusive
-}
+// function getRandomInt(min, max) {
+//   min = Math.ceil(min);
+//   max = Math.floor(max);
+//   return Math.floor(Math.random() * (max - min)) + min; //The maximum is exclusive and the minimum is inclusive
+// }
 
 
 app.get('/', function (req, res) {
@@ -60,7 +60,6 @@ app.get('/quote/' || '/quote', function (req, res) {
       res.status(200).json(quote);
     }
   });
-  // db.getQuote(null);
 })
 
 
